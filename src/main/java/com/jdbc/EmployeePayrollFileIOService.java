@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeePayrollFileIOService {
-	public static String PAYROLL_FILE_NAME = "Desktop//EmployeePayRollProblemMySql";
+	public static String PAYROLL_FILE_NAME = "payroll-file.txt";
 
 	public void writeData(List<EmployeePayrollData> employeePayrollList) {
 		StringBuffer empBuffer = new StringBuffer();
@@ -17,7 +17,9 @@ public class EmployeePayrollFileIOService {
 			empBuffer.append(employeeDataString);
 		});
 
-		// populating data in string buffer and writing in the file
+		/**
+		 * populating data in string buffer and writing in the file
+		 */
 		try {
 			Files.write(Paths.get(PAYROLL_FILE_NAME), empBuffer.toString().getBytes());
 		} catch (IOException e) {
@@ -26,7 +28,9 @@ public class EmployeePayrollFileIOService {
 
 	}
 
-	/* print the data */
+	/**
+	 * print the data
+	 */
 	public void printData() {
 		try {
 			Files.lines(new File("payroll-file.txt").toPath()).forEach(System.out::println);
@@ -35,7 +39,9 @@ public class EmployeePayrollFileIOService {
 		}
 	}
 
-	/* count the entries */
+	/*
+	 * count the entries
+	 */
 	public long countEntries() {
 		long entries = 0;
 		try {
@@ -46,7 +52,9 @@ public class EmployeePayrollFileIOService {
 		return entries;
 	}
 
-	/* Read the data */
+	/*
+	 * Read the data
+	 */
 	public List<EmployeePayrollData> readData() {
 		List<EmployeePayrollData> employeePayrollList = new ArrayList<EmployeePayrollData>();
 		try {
@@ -58,4 +66,3 @@ public class EmployeePayrollFileIOService {
 		return employeePayrollList;
 	}
 }
-

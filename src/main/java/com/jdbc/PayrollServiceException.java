@@ -1,6 +1,10 @@
 package com.jdbc;
 
 public class PayrollServiceException extends Exception {
+
+	/*
+	 * 
+	 */
 	enum ExceptionType {
 		CONNECTION_PROBLEM, RETRIEVAL_PROBLEM;
 	}

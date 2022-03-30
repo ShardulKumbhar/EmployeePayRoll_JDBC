@@ -9,8 +9,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeePayrollDBService  {
+public class EmployeePayrollDBService {
 
+	/*
+	 * creating connection with mysql database
+	 */
 	private Connection getConnection() throws SQLException {
 		String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service";
 		String userName = "root";
@@ -21,9 +24,10 @@ public class EmployeePayrollDBService  {
 		System.out.println("connection is successful!!!!" + connection);
 		return connection;
 	}
+
 	public List<EmployeePayrollData> readData() throws PayrollServiceException {
 		String sql = "select * from employee_payroll";
-		
+
 		List<EmployeePayrollData> employeePayrollList = new ArrayList<EmployeePayrollData>();
 		try {
 			Connection connection = this.getConnection();
