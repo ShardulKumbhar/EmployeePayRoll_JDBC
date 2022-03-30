@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.jdbc.EmployeePayrollData;
 import com.jdbc.EmployeePayrollService;
+import com.jdbc.PayrollServiceException;
 
 public class EmployeePayrollServiceTest {
 	static EmployeePayrollService employeePayrollService;
@@ -40,9 +41,23 @@ public class EmployeePayrollServiceTest {
 	}
 
 	@Test
-	public void givenFileOnReadingFileShouldMatchEmployeeCount() {
+	public void givenFileOnReadingFileShouldMatchEmployeeCount() { 
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
 		List<EmployeePayrollData> entries = employeePayrollService.readPayrollData(EmployeePayrollService.IOService.FILE_IO);
+	}
+	
+	@Test
+	public void givenEmployeePayrollinDB_whenRetrieved_ShouldMatch_Employee_Count() throws PayrollServiceException {
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollData(EmployeePayrollService.IOService.DB_IO);
+		Assert.assertEquals(3, employeePayrollData.size());
+	}
+	
+	@Test
+	public void givenNewSalaryForEmployee_WhenUpdated_shouldSynchronizewithDataBase() throws PayrollServiceException {
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollData(EmployeePayrollService.IOService.DB_IO);
+		employeePayrollService.updateEmployeeSalary("Teresa",3000000.00);
+		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Teresa");
+		Assert.assertTrue(result);
 	}
 
 	

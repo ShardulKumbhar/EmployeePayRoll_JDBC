@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeePayrollFileIOService {
-	public static String PAYROLL_FILE_NAME = "Desktop//EmployeePayRollProblemMySql";
+	public static String PAYROLL_FILE_NAME = "C:\\Users\\shard\\eclipse-workspace\\Advance java\\EmployeePayRoll_JDBC\\EmployeePayRoll_JDBC\\src\\payroll-file.txt";
 
 	public void writeData(List<EmployeePayrollData> employeePayrollList) {
 		StringBuffer empBuffer = new StringBuffer();
