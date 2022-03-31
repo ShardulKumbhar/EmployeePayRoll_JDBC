@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.jdbc.EmployeePayrollDBService.StatementType;
-import com.jdbc.EmployeePayrollException.ExceptionType;
 
 import java.util.List;
 import java.util.Scanner;
