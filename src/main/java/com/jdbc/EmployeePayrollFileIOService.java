@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeePayrollFileIOService {
-	public static String PAYROLL_FILE_NAME = "src\\payroll-file.txt";
+	public static String PAYROLL_FILE_NAME = "payroll-file.txt";
 
 	public void writeData(List<EmployeePayrollData> employeePayrollList) {
 		StringBuffer empBuffer = new StringBuffer();
@@ -48,7 +48,7 @@ public class EmployeePayrollFileIOService {
 
 	/* Read the data */
 	public List<EmployeePayrollData> readData() {
-		List<EmployeePayrollData> employeePayrollList = new ArrayList<EmployeePayrollData>();
+		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 		try {
 			Files.lines(new File(PAYROLL_FILE_NAME).toPath()).map(line -> line.trim())
 					.forEach(line -> System.out.println(line));

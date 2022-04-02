@@ -1,5 +1,3 @@
-import static org.junit.Assert.*;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -9,9 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.jdbc.EmployeePayrollDBService.StatementType;
 import com.jdbc.EmployeePayrollData;
-import com.jdbc.EmployeePayrollException;
 import com.jdbc.EmployeePayrollService;
 import com.jdbc.EmployeePayrollService.IOService;
 import com.jdbc.PayrollServiceException;
@@ -26,9 +22,7 @@ public class EmployeePayrollServiceTest {
 
 	@Test
 	public void printWelcomeMessage() {
-
 		employeePayrollService.printWelcomeMessage();
-		
 	}
 
 	@Test
@@ -39,8 +33,8 @@ public class EmployeePayrollServiceTest {
 		employeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmps));
 		employeePayrollService.writeEmployeePayrollData(EmployeePayrollService.IOService.FILE_IO);
 		employeePayrollService.printData(EmployeePayrollService.IOService.FILE_IO);
-		long entriess = employeePayrollService.countEntries(EmployeePayrollService.IOService.FILE_IO);
-		Assert.assertEquals(3, entriess);
+		long entries = employeePayrollService.countEntries(EmployeePayrollService.IOService.FILE_IO);
+		Assert.assertEquals(3, entries);
 	}
 
 	@Test
@@ -66,4 +60,56 @@ public class EmployeePayrollServiceTest {
 		Assert.assertTrue(result);
 	}
 
+	@Test
+	public void givenDateRange_WhenRetrieved_ShouldMatchEmployeeCount() throws PayrollServiceException {
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		LocalDate startDate = LocalDate.of(2018, 01, 01);
+		LocalDate endDate = LocalDate.now();
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService
+				.readEmployeePayrollForDateRange(IOService.DB_IO, startDate, endDate);
+		Assert.assertEquals(3, employeePayrollData.size());
+	}
+
+	@Test
+	public void givenPayrollData_whenAverageSalaryRetrievedByGender_shouldReturnProperValue()
+			throws PayrollServiceException {
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		Map<String, Double> averageSalaryByGender = employeePayrollService.readAverageSalaryByGender(IOService.DB_IO);
+		Assert.assertTrue(
+				averageSalaryByGender.get("M").equals(2000000.00) && averageSalaryByGender.get("F").equals(3000000.00));
+	}
+
+	@Test
+	public void givenPayrollData_whenAverageSalaryRetrievedByGender_shouldReturnProperCountValue()
+			throws PayrollServiceException {
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		Map<String, Double> countByGender = employeePayrollService.readCountByGender(IOService.DB_IO);
+		Assert.assertTrue(countByGender.get("M").equals(2.0) && countByGender.get("F").equals(1.0));
+	}
+
+	@Test
+	public void givenPayrollData_whenAverageSalaryRetrievedByGender_shouldReturnProperMinimumValue()
+			throws PayrollServiceException {
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		Map<String, Double> countByGender = employeePayrollService.readMinumumSalaryByGender(IOService.DB_IO);
+		Assert.assertTrue(countByGender.get("M").equals(1000000.00) && countByGender.get("F").equals(3000000.00));
+	}
+
+	@Test
+	public void givenPayrollData_whenAverageSalaryRetrievedByGender_shouldReturnProperMaximumValue()
+			throws PayrollServiceException {
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		Map<String, Double> countByGender = employeePayrollService.readMaximumSalaryByGender(IOService.DB_IO);
+		Assert.assertTrue(countByGender.get("M").equals(3000000.00) && countByGender.get("F").equals(3000000.00));
+	}
+
+	@Test
+	public void givenPayrollData_whenAverageSalaryRetrievedByGender_shouldReturnProperSumValue()
+			throws PayrollServiceException {
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		Map<String, Double> sumSalaryByGender = employeePayrollService.readSumSalaryByGender(IOService.DB_IO);
+		Assert.assertTrue(
+				sumSalaryByGender.get("M").equals(4000000.00) && sumSalaryByGender.get("F").equals(3000000.00));
+	}
 }

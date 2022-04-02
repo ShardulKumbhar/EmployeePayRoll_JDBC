@@ -11,4 +11,5 @@ public class PayrollServiceException extends Exception {
 		super(message);
 		this.type = type;
 	}
+	
 }
